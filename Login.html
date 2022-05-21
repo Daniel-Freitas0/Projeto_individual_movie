@@ -6,13 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="Logo.png" />
     <title>Login</title>
 </head>
 
 <body>
     <div class="main-login">
         <div class="left-login">
-            <h1>Faça login <br>E se divirta</h1>
+            <h1>Faça login 
+                <br>e Divirta-se</h1>
             <img class="left-login-image" src="fitas.svg" alt="Fitas Animação">
 
         </div>
@@ -20,20 +22,19 @@
             <div class="card-login">
                 <h1>LOGIN</h1>
                 <div class="textfield">
-                    <label for="usuario">Usuário</label>
-                    <input type="text" name="usuario" placeholder="Usuário">
+                    <label for="usuario">Email</label>
+                    <input type="text" name="email" placeholder="Seu Email" onchange="validarEmail()">
                 </div>
                 <div class="textfield">
                     <label for="senha">Senha</label>
                     <input type="password" name="Senha" placeholder="Senha">
                 </div>
                 <button class="btn-login">Login</button>
-                <li class="cadastro">cadastre-se</li>
+                <a class="cadastro" href="Cadastro.html">ainda não tenho uma conta</a>
             </div>
 
 
         </div>
     </div>
 </body>
-
 </html>

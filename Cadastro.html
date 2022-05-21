@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="Logo.png" />
+    <title>Cadastro</title>
+</head>
+
+<body>
+    <div class="main-login">
+        <div class="left-login">
+            <h1>Poxa, <br> você ainda não fez cadastro?</h1>
+            <img class="left-login-image" src="taken.svg" alt="Fitas Animação">
+
+        </div>
+        <div class="right-login">
+            <div class="card-login">
+                <h1>CADASTRO</h1>
+                <div class="textfield">
+                    <label for="usuario">Email</label>
+                    <input type="email" id="ipt_email" placeholder="Seu E mail" onchange="validarEmail()">
+                    <span class="msg_validacao" id="msgEmail"></span>
+                </div>
+                <div class="textfield">
+                    <label for="senha">Senha</label>
+                    <input type="password" name="Senha" placeholder="Senha">
+                </div>
+                <div class="textfield">
+                    <label for="senha">Confirme sua senha</label>
+                    <input type="password" name="confirmar senha" placeholder="Senha">
+                </div>
+                <button class="btn-login">cadastrar</button>
+                <a class="cadastro" href="Login.html">Fazer login</a>
+            </div>
+
+
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    function validarEmail() {
+        var email = ipt_email.value;
+        var temArroba = (email.indexOf('@') != -1)
+        var temEspaco = (email.indexOf(' ') >= 0)
+        var posicao = email.indexOf('@');
+        var temChar = posicao - 1 != null && posicao + 1 != null;
+        var temPonto = email.indexOf('.', posicao) != -1;
+        var posicaoPonto = email.indexOf('.', posicao);
+        var temCharPonto = email[posicaoPonto + 1] != undefined;
+
+
+        if (temArroba) {
+            if (!temEspaco) {
+                if (temChar) {
+                    if (temCharPonto) {
+                        if (temPonto) {
+                            msgEmail.innerHTML = '';
+                            emailValido = true;
+                        } else {
+                            msgEmail.innerHTML = `Email inválido! O email inserido não contém ponto após o @ `
+                        }
+                    } else {
+                        msgEmail.innerHTML =
+                            `Email inválido! É necessário que haja pelo menos um caracter após o . (ponto) `
+                    }
+                } else {
+                    msgEmail.innerHTML =
+                        `Email inválido! É necessário que haja pelo menos um caracter antes e depois do @ `
+                }
+            } else {
+                msgEmail.innerHTML = `Email inválido! O Email tem espaço`
+            }
+        } else {
+            msgEmail.innerHTML = `Email inválido! É necessário que haja @ `
+        }
+    }
+</script>
