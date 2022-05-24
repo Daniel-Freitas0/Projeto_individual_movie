@@ -3,11 +3,57 @@
 
 body {
     margin: 0;
+    padding: 0;
     font-family: 'Noto Sans', sans-serif;
+    height: 100vh;
+    width: 100vw;
 }
 
 body * {
     box-sizing: border-box;
+}
+
+header{
+    background-color:#2b134b;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.corpo{
+    height: 100%;
+    width: 100%;
+    background-color: #201b2c;
+}
+
+header .logo{
+    position: relative;
+    max-width: 80px;
+}
+
+header ul{
+    position: relative;
+    display: flex;
+}
+
+header li{
+    list-style: none;
+}
+
+header li a{
+display: inline-block;
+color: #fff;
+font-weight: 800;
+margin-left: 40px;
+text-decoration: none;
+}
+
+header li a:hover{
+color: #00ff88;
 }
 
 .main-login {
@@ -44,6 +90,8 @@ body * {
     justify-content: center;
     align-items: center;
 }
+
+
 
 .card-login {
     width: 60%;
