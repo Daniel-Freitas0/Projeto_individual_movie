@@ -17,12 +17,21 @@
     </header>
     <section class="corpo">
 
+<div class="videos">
+    <div class="vd">
+    <video id="filme" width="60%" height="100%">
+        <source src="BeeMovie.mp4" type="video/mp4">
+        <source src="BeeMovie.ogg" type="video/ogg">
+      Your browser does not support the video tag.
+      </video>
+      <img id="btn_play" src="play.png" onclick="playVideo()">
+    </div>
+    <div class="resposta">
+        <input type="text" placeholder="Assista a um segundo e ao final, coloque a dedução aqui">
+        <button class="btn_resposta">Guess</button>
+    </div>
 
-            <video id="filme" width="50%" height="60%" poster="jigsaw.jpg" controls>
-                <source src="BeeMovie.mp4" type="video/mp4">
-                <source src="BeeMovie.ogg" type="video/ogg">
-              Your browser does not support the video tag.
-              </video>
+</div>
 
  
     </section>
@@ -34,4 +43,12 @@ filme.addEventListener('play', (event) => {
    document.getElementById("filme").removeAttribute("controls");
 });
 
+ function playVideo(){
+    filme.play()
+    btn_play.style.display = 'none';
+    document.getElementById('filme').addEventListener('ended',myHandler,false);
+    function myHandler(e) {
+    filme.currentTime=0;
+    }
+}
 </script>
