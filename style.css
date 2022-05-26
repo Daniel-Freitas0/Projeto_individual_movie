@@ -28,6 +28,18 @@ header{
     justify-content: space-between;
     align-items: center;
 }
+
+
+.logoName{
+    display: flex;
+    color: white;
+}
+
+.hs{
+    width: 100%;
+    margin-left: 8%;
+}
+
 .corpo{
     height: 100%;
     width: 100%;
@@ -122,7 +134,7 @@ color: #00ff88;
 .main-login {
     width: 100vw;
     height: 100vh;
-    background-color: #201b2c;
+    background-color: #19181b;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -163,7 +175,7 @@ color: #00ff88;
     align-items: center;
     flex-direction: column;
     padding: 30px 35px;
-    background: #2f2841;
+    background: #23202b;
     border-radius: 20px;
     box-shadow: 0px 10px 40px #00000056;
 }
