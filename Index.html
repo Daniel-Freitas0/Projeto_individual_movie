@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,7 +35,8 @@
     </div>
     <div class="resposta">
         <input type="text" placeholder="Assista a um segundo e ao final, coloque a dedução aqui">
-        <button class="btn_resposta">Guess</button>
+        <button class="btn_resposta_guess">Guess</button>
+        <button class="btn_resposta_skip">Skip</button>
     </div>
 
 </div>
@@ -55,7 +56,7 @@ filme.addEventListener('play', (event) => {
     btn_play.style.display = 'none';
     document.getElementById('filme').addEventListener('ended',myHandler,false);
     function myHandler(e) {
-    filme.currentTime=0;
+    filme.currentTime = 0;
     }
 }
 </script>
