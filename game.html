@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logoName">
+            <a href="Login.html" class="logo"><img src="logo.png" alt="logo"></a>
+            <div class="hs">
+                <h5>Movie in</h5>
+                <h4>Second</h4>
+            </div>
+
+        </div>
+        <ul class="lista">
+            <li><a onclick="score()" href="#">ver score</a></li>
+            <li><a href="Login.html">sair</a></li>
+        </ul>
+    </header>
+    <section class="corpo">
+
+<div class="videos">
+    <div class="vd">
+    <video id="filme" width="60%" height="100%">
+        <source src="BeeMovie.mp4" type="video/mp4">
+        <source src="BeeMovie.ogg" type="video/ogg">
+      Your browser does not support the video tag.
+      </video>
+      <img id="btn_play" src="play.png" onclick="playVideo()">
+    </div>
+    <div class="resposta">
+        <input type="text" placeholder="Assista a um segundo e ao final, coloque a dedução aqui">
+        <button class="btn_resposta_guess">Guess</button>
+        <button class="btn_resposta_skip">Skip</button>
+    </div>
+
+</div>
+
+ 
+    </section>
+</body>
+</html>
+
+<script>
+filme.addEventListener('play', (event) => {
+   document.getElementById("filme").removeAttribute("controls");
+});
+
+ function playVideo(){
+    filme.play()
+    btn_play.style.display = 'none';
+    document.getElementById('filme').addEventListener('ended',myHandler,false);
+    function myHandler(e) {
+    filme.currentTime = 0;
+    }
+}
+</script>
