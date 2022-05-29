@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Movsec</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header class="header">
         <div class="logoName">
-            <a href="Login.html" class="logo"><img src="logo.png" alt="logo"></a>
+            <a href="index.html" class="logo"><img src="logo.png" alt="logo"></a>
             <div class="hs">
                 <h5>Movie in</h5>
                 <h4>Second</h4>
@@ -18,45 +20,174 @@
 
         </div>
         <ul class="lista">
-            <li><a onclick="score()" href="#">ver score</a></li>
-            <li><a href="Login.html">sair</a></li>
+            <li><a id="ver_score" onclick="mostrarScore()" href="#">ver score</a></li>
+            <li><a id="ocultar_score" onclick="ocultarScore()" href="#" style="display: none;">ocultar score</a></li>
+            <li><a href="index.html">sair</a></li>
         </ul>
     </header>
+
     <section class="corpo">
 
-<div class="videos">
-    <div class="vd">
-    <video id="filme" width="60%" height="100%">
-        <source src="BeeMovie.mp4" type="video/mp4">
-        <source src="BeeMovie.ogg" type="video/ogg">
-      Your browser does not support the video tag.
-      </video>
-      <img id="btn_play" src="play.png" onclick="playVideo()">
-    </div>
-    <div class="resposta">
-        <input type="text" placeholder="Assista a um segundo e ao final, coloque a dedução aqui">
-        <button class="btn_resposta_guess">Guess</button>
-        <button class="btn_resposta_skip">Skip</button>
-    </div>
+        <div class="videos">
+            <div class="div_score" id="id_score">
+                <h3 class="texto_score">Score</h3>
+                <span class="texto_score">Jogadas:<span id="span_jogadas">0</span></span>
+                <span class="texto_score">Acertos:<span id="span_acertos">0</span></span>
+                <span class="texto_score">Perdas:<span id="span_perdas">0</span></span>
+                <span class="texto_score">Média:<span id="span_media">0</span></span>
+            </div>
 
-</div>
+            <div class="vd">
+                <video id="filme" width="60%" height="100%">
+                    <source src="BeeMovie.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <img id="btn_play" src="play.png" onclick="playVideo()">
+            </div>
+            <div class="resposta">
+                <input type="text" placeholder="Assista a um segundo e ao final, coloque a dedução aqui"
+                    id="ipt_resposta">
+                <button class="btn_resposta_guess" onclick="guess()">Guess</button>
+                <button class="btn_resposta_skip" onclick="skip()">Skip</button>
+            </div>
 
- 
+        </div>
+
+
     </section>
 </body>
+
 </html>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-filme.addEventListener('play', (event) => {
-   document.getElementById("filme").removeAttribute("controls");
-});
+    id_score.style.display = 'none'
+    var store_filmes = [0, 1, 2, 3, 4];
 
- function playVideo(){
-    filme.play()
-    btn_play.style.display = 'none';
-    document.getElementById('filme').addEventListener('ended',myHandler,false);
-    function myHandler(e) {
-    filme.currentTime = 0;
+
+    var get_filme = Math.floor(Math.random() * store_filmes.length);
+
+    var filmes_sorteados = []; //para ver filmes que já foram sorteados, evitando repetição.
+    filmes_sorteados.push(store_filmes[get_filme]);
+
+    var filme_agora = filmes_sorteados[filmes_sorteados.length - 1]
+
+    if (filme_agora == 0) {
+        filme.src = 'Kung_fu.mp4'
+    } else if (filme_agora == 1) {
+        filme.src = 'BeeMovie.mp4'
+    } else if (filme_agora == 2) {
+        filme.src = 'Monstros.mp4'
+    } else if (filme_agora == 3) {
+        filme.src = 'Toy_story.mp4'
+    } else if (filme_agora == 4) {
+        filme.src = 'Shrek.mp4'
     }
-}
+
+
+    filme.addEventListener('play', (event) => {
+        document.getElementById("filme").removeAttribute("controls");
+    });
+
+    function playVideo() {
+        filme.play()
+        btn_play.style.display = 'none';
+        document.getElementById('filme').addEventListener('ended', myHandler, false);
+
+        function myHandler(e) {
+            filme.currentTime = 0;
+        }
+    }
+
+
+    var qtdJogadas = 0;
+    var qtdAcertos = 0;
+    var qtdPerdas = 0;
+
+    function guess() {
+
+        ver_score.style.display = 'block'
+        // ver_score.style.display = 'inline'
+
+        ocultar_score.style.display = 'none'
+        id_score.style.display = 'none'
+
+        var acertou = false;
+        var filme_resposta = ipt_resposta.value.toUpperCase();
+
+        if (filme_agora == 0 && filme_resposta == 'KUNG FU PANDA') {
+            acertou = true
+        } else if (filme_agora == 1 && filme_resposta == 'BEE MOVIE') {
+            acertou = true
+        } else if (filme_agora == 2 && filme_resposta == 'MONSTROS') {
+            acertou = true
+        } else if (filme_agora == 3 && filme_resposta == 'TOY STORY') {
+            acertou = true
+        } else if (filme_agora == 4 && filme_resposta == 'SHREK') {
+            acertou = true
+        }
+
+        if (acertou == false) {
+            alert("ce erro fiu")
+            qtdPerdas++
+        } else {
+            alert("parabéns")
+            qtdAcertos++
+        }
+        qtdJogadas = qtdJogadas + 1;
+
+    }
+
+    function skip() {
+        filme_agora = sortearFilme();
+        if (filme_agora == 0) {
+            filme.src = 'Kung_fu.mp4'
+        } else if (filme_agora == 1) {
+            filme.src = 'BeeMovie.mp4'
+        } else if (filme_agora == 2) {
+            filme.src = 'Monstros.mp4'
+        } else if (filme_agora == 3) {
+            filme.src = 'Toy_story.mp4'
+        } else if (filme_agora == 4) {
+            filme.src = 'Shrek.mp4'
+        }
+
+        btn_play.style.display = 'block';
+
+
+    }
+    
+    function sortearFilme() {
+        if (filmes_sorteados.length < store_filmes.length) {
+            let indiceFilme = Math.floor(Math.random() * store_filmes.length);
+            while (filmes_sorteados.indexOf(store_filmes[indiceFilme]) != -1) {
+                indiceFilme = Math.floor(Math.random() * store_filmes.length);
+            }
+            filmes_sorteados.push(store_filmes[indiceFilme]);
+            return indiceFilme;
+        } else {
+            alert("Fim de jogo");
+            return;
+        }
+    }
+
+    function mostrarScore() {
+        ver_score.style.display = 'none'
+        ocultar_score.style.display = 'block'
+        id_score.style.display = 'flex'
+
+        let media = 0;
+        if(qtdJogadas != 0) {
+            media = (qtdAcertos/qtdJogadas) * 100;
+        }
+        span_jogadas.innerHTML = `${Number(qtdJogadas)}`
+        span_acertos.innerHTML = `${Number(qtdAcertos)}`
+        span_perdas.innerHTML = `${Number(qtdPerdas)}`
+        span_media.innerHTML = `${media}%`
+    }
+
+    function ocultarScore() {
+        ver_score.style.display = 'block'
+        ocultar_score.style.display = 'none'
+        id_score.style.display = 'none'
+    }
 </script>

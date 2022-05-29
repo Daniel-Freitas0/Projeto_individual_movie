@@ -27,14 +27,16 @@
                 </div>
                 <div class="textfield">
                     <label for="senha">Senha</label>
-                    <input type="password" name="Senha" placeholder="Senha">
+                    <input type="password" id="ipt_senha" name="Senha" placeholder="Senha" onchange="validarSenha()">
+                    <span class="msg_validacao" id="msgSenha"></span>
                 </div>
                 <div class="textfield">
                     <label for="senha">Confirme sua senha</label>
-                    <input type="password" name="confirmar senha" placeholder="Senha">
+                    <input type="password" id="ipt_confirm" name="confirmar senha" placeholder="Senha" onchange="validarConfirm()">
+                    <span class="msg_validacao" id="msgConfirm"></span>
                 </div>
-                <button class="btn-login">cadastrar</button>
-                <a class="cadastro" href="Login.html">Fazer login</a>
+                <button class="btn-login" onclick="cadastrar()">cadastrar</button>
+                <a class="cadastro" href="index.html">Fazer login</a>
             </div>
 
 
@@ -43,7 +45,12 @@
 </body>
 
 </html>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    var emailValido = false;
+    var senhaValida = false;
+    var confirmValido = false;
+
     function validarEmail() {
         var email = ipt_email.value;
         var temArroba = (email.indexOf('@') != -1)
@@ -80,4 +87,59 @@
             msgEmail.innerHTML = `Email inválido! É necessário que haja @ `
         }
     }
+    
+
+    function validarSenha() {
+        var senha = ipt_senha.value;
+        var confirm = ipt_confirm.value;
+        
+        if (ipt_senha.value.length < 7){
+            msgSenha.innerHTML = `senha deve ter no mínimo 8 caracteres`
+            senhaValida = false;
+        }
+        else{
+            senhaValida = true;
+        }
+    }
+    function validarConfirm() {
+        var senha = ipt_senha.value;
+        var confirm = ipt_confirm.value;
+        
+        if (confirm != senha){
+            msgConfirm.innerHTML = `opa, confirmação deve ser igual a senha`
+            confirmValido == false;
+        }
+        confirmValido = true;
+    }
+
+function cadastrar() {
+    console.log(emailValido)
+    console.log(senhaValida)
+    console.log(confirmValido)
+
+    if (emailValido == true && senhaValida == true && confirmValido == true) {
+        Swal.fire({
+  position: 'center',
+  background: '#19181b',
+  color:'#fff',
+  icon: 'success',
+  title: 'cadastro realizado com sucesso <br> corre pra fazer login :)',
+  showConfirmButton: false,
+  timer: 1500
+})
+    }
+    else{
+        Swal.fire({
+  position: 'center',
+  background: '#19181b',
+  color:'#fff',
+  icon: 'error',
+  title: 'Opa, calma aí!<br>algum campo está com um aviso pendente ou vazio.',
+  showConfirmButton: false,
+  timer: 1500
+})
+    }
+    
+}
+    
 </script>

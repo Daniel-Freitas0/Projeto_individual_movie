@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 *{
     margin: 0;
@@ -50,6 +51,27 @@ header{
     flex-direction: column;
 }
 
+.div_score{
+    display: none;
+    z-index: 1;
+    font-family: 'Press Start 2P', cursive;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 30%;
+    height: 50%;
+    padding: 16px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 10px;
+    color: #00ff88;
+    background-color: #19181b;
+    cursor: pointer;
+    box-shadow: 0px 10px 40px -12px #00ff8052;
+}
 .videos{
 display: flex;
 align-items: center;
