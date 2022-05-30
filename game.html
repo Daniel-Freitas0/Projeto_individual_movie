@@ -20,6 +20,7 @@
 
         </div>
         <ul class="lista">
+            <li><a onclick="f_comojogar()" href="#">Como jogar</a></li>
             <li><a id="ver_score" onclick="mostrarScore()" href="#">ver score</a></li>
             <li><a id="ocultar_score" onclick="ocultarScore()" href="#" style="display: none;">ocultar score</a></li>
             <li><a href="index.html">sair</a></li>
@@ -29,6 +30,14 @@
     <section class="corpo">
 
         <div class="videos">
+            <div class="div_como_jogar" id="como_jogar">
+                <h3 class="texto_como_jogar">Movie In Second</h3>
+                <h5 class="texto_como_jogar">O jogo de filmes em segundos!</h5>
+                <span class="texto_como_jogar">1. Assista a uma versão de um segundo do filme inteiro (sem pausar!).</span>
+                <span class="texto_como_jogar">2. Deduza o titulo, ou aperte 'skip' caso não saiba a resposta.</span>
+                <span class="texto_como_jogar">3. Dependendo da sua resposta, você ganha ou perde ponto.</span>
+                <span class="texto_como_jogar">4. Consegue ver sua pontuação e media no botão 'ver score'.</span>
+            </div>
             <div class="div_score" id="id_score">
                 <h3 class="texto_score">Score</h3>
                 <span class="texto_score">Jogadas:<span id="span_jogadas">0</span></span>
@@ -60,6 +69,9 @@
 </html>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    como_jogar.style.display =  'none'
+
+    var exibir_como = false;
     id_score.style.display = 'none'
     var store_filmes = [0, 1, 2, 3, 4];
 
@@ -106,7 +118,7 @@
     function guess() {
 
         ver_score.style.display = 'block'
-        // ver_score.style.display = 'inline'
+         ver_score.style.display = 'inline'
 
         ocultar_score.style.display = 'none'
         id_score.style.display = 'none'
@@ -118,7 +130,7 @@
             acertou = true
         } else if (filme_agora == 1 && filme_resposta == 'BEE MOVIE') {
             acertou = true
-        } else if (filme_agora == 2 && filme_resposta == 'MONSTROS') {
+        } else if (filme_agora == 2 && filme_resposta == 'MONSTROS SA') {
             acertou = true
         } else if (filme_agora == 3 && filme_resposta == 'TOY STORY') {
             acertou = true
@@ -127,17 +139,36 @@
         }
 
         if (acertou == false) {
-            alert("ce erro fiu")
+            Swal.fire({
+  position: 'center',
+  background: '#19181b',
+  color:'#fff',
+  icon: 'error',
+  title: 'ERROOOU',
+  showConfirmButton: false,
+  timer: 1500
+})
             qtdPerdas++
         } else {
-            alert("parabéns")
+            Swal.fire({
+  position: 'center',
+  background: '#19181b',
+  color:'#fff',
+  icon: 'success',
+  title: 'Ora ora, Temos aqui um sherok holmes',
+  showConfirmButton: false,
+  timer: 1500
+})
             qtdAcertos++
         }
         qtdJogadas = qtdJogadas + 1;
+        skip();
+        ipt_resposta.value = '';
 
     }
 
     function skip() {
+        ipt_resposta.value = '';
         filme_agora = sortearFilme();
         if (filme_agora == 0) {
             filme.src = 'Kung_fu.mp4'
@@ -154,6 +185,7 @@
         btn_play.style.display = 'block';
 
 
+
     }
     
     function sortearFilme() {
@@ -165,7 +197,13 @@
             filmes_sorteados.push(store_filmes[indiceFilme]);
             return indiceFilme;
         } else {
-            alert("Fim de jogo");
+            Swal.fire({
+  title: 'O jogo acabou quer bó ver o score?',
+  background: '#19181b',
+  color:'#fff',
+}).then((result) => {
+    mostrarScore()
+})
             return;
         }
     }
@@ -189,5 +227,17 @@
         ver_score.style.display = 'block'
         ocultar_score.style.display = 'none'
         id_score.style.display = 'none'
+    }
+
+    function f_comojogar() {
+        if(exibir_como == false){
+        como_jogar.style.display =  'block'
+        como_jogar.style.display = 'flex'
+        exibir_como = true
+        }
+        else{
+            como_jogar.style.display =  'none' 
+            exibir_como = false;
+        }
     }
 </script>
