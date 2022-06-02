@@ -6,13 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movsec</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./assets/icon/logo.png" />
+    <script src="../js/funcoes.js"></script>
 </head>
 
-<body>
+<body onload="validarSessao()">
     <header class="header">
         <div class="logoName">
-            <a href="index.html" class="logo"><img src="logo.png" alt="logo"></a>
+            <a href="./index.html" class="logo"><img src="./assets/icon/logo.png" alt="logo"></a>
             <div class="hs">
                 <h5>Movie in</h5>
                 <h4>Second</h4>
@@ -23,7 +25,7 @@
             <li><a onclick="f_comojogar()" href="#">Como jogar</a></li>
             <li><a id="ver_score" onclick="mostrarScore()" href="#">ver score</a></li>
             <li><a id="ocultar_score" onclick="ocultarScore()" href="#" style="display: none;">ocultar score</a></li>
-            <li><a href="index.html">sair</a></li>
+            <li><a href="./Index.html">sair</a></li>
         </ul>
     </header>
 
@@ -48,10 +50,10 @@
 
             <div class="vd">
                 <video id="filme" width="60%" height="100%">
-                    <source src="BeeMovie.mp4" type="video/mp4">
+                    <source src="./assets/videos/BeeMovie.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <img id="btn_play" src="play.png" onclick="playVideo()">
+                <img id="btn_play" src="./assets/imgs/play.png" onclick="playVideo()">
             </div>
             <div class="resposta">
                 <input type="text" placeholder="Assista a um segundo e ao final, coloque a dedução aqui"
@@ -84,15 +86,15 @@
     var filme_agora = filmes_sorteados[filmes_sorteados.length - 1]
 
     if (filme_agora == 0) {
-        filme.src = 'Kung_fu.mp4'
+        filme.src = './assets/videos/Kung_fu.mp4'
     } else if (filme_agora == 1) {
-        filme.src = 'BeeMovie.mp4'
+        filme.src = './assets/videos/BeeMovie.mp4'
     } else if (filme_agora == 2) {
-        filme.src = 'Monstros.mp4'
+        filme.src = './assets/videos/Monstros.mp4'
     } else if (filme_agora == 3) {
-        filme.src = 'Toy_story.mp4'
+        filme.src = './assets/videos/Toy_story.mp4'
     } else if (filme_agora == 4) {
-        filme.src = 'Shrek.mp4'
+        filme.src = './assets/videos/Shrek.mp4'
     }
 
 
@@ -155,7 +157,7 @@
   background: '#19181b',
   color:'#fff',
   icon: 'success',
-  title: 'Ora ora, Temos aqui um sherok holmes',
+  title: 'Ora ora, Temos aqui um Sherlock Holmes',
   showConfirmButton: false,
   timer: 1500
 })
@@ -171,24 +173,26 @@
         ipt_resposta.value = '';
         filme_agora = sortearFilme();
         if (filme_agora == 0) {
-            filme.src = 'Kung_fu.mp4'
+            filme.src = './assets/videos/Kung_fu.mp4'
         } else if (filme_agora == 1) {
-            filme.src = 'BeeMovie.mp4'
+            filme.src = './assets/videos/BeeMovie.mp4'
         } else if (filme_agora == 2) {
-            filme.src = 'Monstros.mp4'
+            filme.src = './assets/videos/Monstros.mp4'
         } else if (filme_agora == 3) {
-            filme.src = 'Toy_story.mp4'
+            filme.src = './assets/videos/Toy_story.mp4'
         } else if (filme_agora == 4) {
-            filme.src = 'Shrek.mp4'
+            filme.src = './assets/videos/Shrek.mp4'
         }
 
         btn_play.style.display = 'block';
+        
 
 
 
     }
     
     function sortearFilme() {
+        qtdJogadas++
         if (filmes_sorteados.length < store_filmes.length) {
             let indiceFilme = Math.floor(Math.random() * store_filmes.length);
             while (filmes_sorteados.indexOf(store_filmes[indiceFilme]) != -1) {
@@ -198,7 +202,7 @@
             return indiceFilme;
         } else {
             Swal.fire({
-  title: 'O jogo acabou quer bó ver o score?',
+  title: 'O jogo acabou vamos ver o score?',
   background: '#19181b',
   color:'#fff',
 }).then((result) => {
@@ -214,13 +218,14 @@
         id_score.style.display = 'flex'
 
         let media = 0;
+
         if(qtdJogadas != 0) {
             media = (qtdAcertos/qtdJogadas) * 100;
         }
         span_jogadas.innerHTML = `${Number(qtdJogadas)}`
         span_acertos.innerHTML = `${Number(qtdAcertos)}`
         span_perdas.innerHTML = `${Number(qtdPerdas)}`
-        span_media.innerHTML = `${media}%`
+        span_media.innerHTML = `${media.toFixed(0)}%`
     }
 
     function ocultarScore() {

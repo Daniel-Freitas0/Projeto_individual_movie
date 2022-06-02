@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="shortcut icon" href="Logo.png" />
+    <script src="./js/funcoes.js"></script>
     <title>Cadastro</title>
 </head>
 
@@ -22,17 +23,17 @@
                 <h1>CADASTRO</h1>
                 <div class="textfield">
                     <label for="usuario">Email</label>
-                    <input type="email" id="ipt_email" placeholder="Seu E mail" onchange="validarEmail()">
+                    <input type="email" id="email_input" placeholder="Seu E mail" onchange="validarEmail()">
                     <span class="msg_validacao" id="msgEmail"></span>
                 </div>
                 <div class="textfield">
                     <label for="senha">Senha</label>
-                    <input type="password" id="ipt_senha" name="Senha" placeholder="Senha" onchange="validarSenha()">
+                    <input type="password" id="senha_input" name="Senha" placeholder="Senha" onchange="validarSenha()">
                     <span class="msg_validacao" id="msgSenha"></span>
                 </div>
                 <div class="textfield">
                     <label for="senha">Confirme sua senha</label>
-                    <input type="password" id="ipt_confirm" name="confirmar senha" placeholder="Senha" onchange="validarConfirm()">
+                    <input type="password" id="confirmacao_senha_input" name="confirmar senha" placeholder="Senha" onchange="validarConfirm()">
                     <span class="msg_validacao" id="msgConfirm"></span>
                 </div>
                 <button class="btn-login" onclick="cadastrar()">cadastrar</button>
@@ -52,7 +53,7 @@
     var confirmValido = false;
 
     function validarEmail() {
-        var email = ipt_email.value;
+        var email = email_input.value;
         var temArroba = (email.indexOf('@') != -1)
         var temEspaco = (email.indexOf(' ') >= 0)
         var posicao = email.indexOf('@');
@@ -90,10 +91,10 @@
     
 
     function validarSenha() {
-        var senha = ipt_senha.value;
-        var confirm = ipt_confirm.value;
+        var senha = senha_input.value;
+        var confirm = confirmacao_senha_input.value;
         
-        if (ipt_senha.value.length < 7){
+        if (senha_input.value.length < 7){
             msgSenha.innerHTML = `senha deve ter no mínimo 8 caracteres`
             senhaValida = false;
         }
@@ -102,8 +103,8 @@
         }
     }
     function validarConfirm() {
-        var senha = ipt_senha.value;
-        var confirm = ipt_confirm.value;
+        var senha = senha_input.value;
+        var confirm = confirmacao_senha_input.value;
         
         if (confirm != senha){
             msgConfirm.innerHTML = `opa, confirmação deve ser igual a senha`
@@ -113,9 +114,6 @@
     }
 
 function cadastrar() {
-    console.log(emailValido)
-    console.log(senhaValida)
-    console.log(confirmValido)
 
     if (emailValido == true && senhaValida == true && confirmValido == true) {
         const Toast = Swal.mixin({
@@ -149,7 +147,81 @@ Toast.fire({
   timer: 1500
 })
     }
-    
+
+    aguardar();
+
+//Recupere o valor da nova input pelo nome do id
+// Agora vá para o método fetch logo abaixo
+var emailVar = email_input.value;
+var senhaVar = senha_input.value;
+var confirmacaoSenhaVar = confirmacao_senha_input.value;
+
+
+// Enviando o valor da nova input
+fetch("/usuarios/cadastrar", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        emailServer: emailVar,
+        senhaServer: senhaVar
+    })
+}).then(function (resposta) {
+
+    console.log("resposta: ", resposta);
+
+    if (resposta.ok) {
+        cardErro.style.display = "block";
+
+        const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+    position: 'center',
+  icon: 'success',
+  background: '#19181b',
+  color:'#fff',
+  title: 'Cadastro realizado com sucesso'
+})
+
+        setTimeout(() => {
+            window.location = "./index.html";
+        }, "2000")
+        
+        limparFormulario();
+        finalizarAguardar();
+    } else {
+        throw Swal.fire({
+  position: 'center',
+  background: '#19181b',
+  color:'#fff',
+  icon: 'error',
+  title: 'Opa,<br> houve um erro ao realizar cadastro.',
+  showConfirmButton: false,
+  timer: 1500
+})
+    }
+}).catch(function (resposta) {
+    console.log(`#ERRO: ${resposta}`);
+    finalizarAguardar();
+});
+
+return false;
 }
-    
+
+function sumirMensagem() {
+cardErro.style.display = "none"
+}
 </script>

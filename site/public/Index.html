@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="Logo.png" />
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/funcoes.js"></script>
+    <link rel="shortcut icon" href="./assets/icon/logo.png" />
     <title>Login</title>
 </head>
 
@@ -15,7 +16,7 @@
         <div class="left-login">
             <h1>Faça login 
                 <br>e Divirta-se</h1>
-            <img class="left-login-image" src="fitas.svg" alt="Fitas Animação">
+            <img class="left-login-image" src="./assets/imgs/fitas.svg" alt="Fitas Animação">
 
         </div>
         <div class="right-login">
@@ -23,14 +24,14 @@
                 <h1>LOGIN</h1>
                 <div class="textfield">
                     <label for="usuario">Email</label>
-                    <input type="text" name="email" placeholder="Seu Email" onchange="validarEmail()">
+                    <input type="text" id="email_input" name="email" placeholder="Seu Email" onchange="validarEmail()">
                 </div>
                 <div class="textfield">
                     <label for="senha">Senha</label>
-                    <input type="password" name="Senha" placeholder="Senha">
+                    <input type="password" id="senha_input" name="Senha" placeholder="Senha">
                 </div>
-                <button onclick="login()" class="btn-login">Login</button>
-                <a class="cadastro" href="Cadastro.html">ainda não tenho uma conta</a>
+                <button onclick="entrar()" class="btn-login">Login</button>
+                <a class="cadastro" href="./Cadastro.html">ainda não tenho uma conta</a>
             </div>
 
 
@@ -40,8 +41,109 @@
 </html>
 
 <script>
-    
-    function login(){
-        window.location.href = "game.html" 
+
+    function entrar(){
+        window.location = "./game.html";
     }
+    
+    function entra(){
+        aguardar();
+
+        var emailVar = email_input.value;
+        var senhaVar = senha_input.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            cardErro.style.display = "block"
+            Swal.fire({
+  position: 'center',
+  background: '#19181b',
+  color:'#fff',
+  icon: 'error',
+  title: 'Opa,<br> não deixe campos em branco',
+  showConfirmButton: false,
+  timer: 1500
+})
+            finalizarAguardar();
+            return false;
+        }
+        else {
+            setInterval(sumirMensagem, 5000)
+        }
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+
+                    setTimeout(function () {
+                        window.location = "./game.html";
+                        const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+    position: 'center',
+  icon: 'success',
+  background: '#19181b',
+  color:'#fff',
+  title: 'Login realizado com sucesso'
+});
+                    }, 1000); 
+
+                });
+
+            } else {
+
+                Swal.fire({
+  position: 'center',
+  background: '#19181b',
+  color:'#fff',
+  icon: 'error',
+  title: 'Opa,<br> houve um erro ao realizar Login.',
+  showConfirmButton: false,
+  timer: 1500
+})
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
 </script>
