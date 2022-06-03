@@ -14,7 +14,7 @@
 <body>
     <div class="main-login">
         <div class="left-login">
-            <h1>Faça login 
+            <h1>Faça login
                 <br>e Divirta-se</h1>
             <img class="left-login-image" src="./assets/imgs/fitas.svg" alt="Fitas Animação">
 
@@ -38,35 +38,27 @@
         </div>
     </div>
 </body>
+
 </html>
 
 <script>
-
-    function entrar(){
-        window.location = "./game.html";
-    }
-    
-    function entra(){
-        aguardar();
-
+    function entrar() {
         var emailVar = email_input.value;
         var senhaVar = senha_input.value;
 
         if (emailVar == "" || senhaVar == "") {
-            cardErro.style.display = "block"
             Swal.fire({
-  position: 'center',
-  background: '#19181b',
-  color:'#fff',
-  icon: 'error',
-  title: 'Opa,<br> não deixe campos em branco',
-  showConfirmButton: false,
-  timer: 1500
-})
+                position: 'center',
+                background: '#19181b',
+                color: '#fff',
+                icon: 'error',
+                title: 'Opa,<br> não deixe campos em branco',
+                showConfirmButton: false,
+                timer: 1500
+            })
             finalizarAguardar();
             return false;
-        }
-        else {
+        } else {
             setInterval(sumirMensagem, 5000)
         }
 
@@ -92,46 +84,47 @@
                     console.log(json);
                     console.log(JSON.stringify(json));
 
+
                     sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
 
                     setTimeout(function () {
                         window.location = "./game.html";
                         const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal
+                                    .resumeTimer)
+                            }
+                        })
 
-Toast.fire({
-    position: 'center',
-  icon: 'success',
-  background: '#19181b',
-  color:'#fff',
-  title: 'Login realizado com sucesso'
-});
-                    }, 1000); 
+                        Toast.fire({
+                            position: 'center',
+                            icon: 'success',
+                            background: '#19181b',
+                            color: '#fff',
+                            title: 'Login realizado com sucesso'
+                        });
+                    }, 1000);
 
                 });
 
             } else {
 
                 Swal.fire({
-  position: 'center',
-  background: '#19181b',
-  color:'#fff',
-  icon: 'error',
-  title: 'Opa,<br> houve um erro ao realizar Login.',
-  showConfirmButton: false,
-  timer: 1500
-})
+                    position: 'center',
+                    background: '#19181b',
+                    color: '#fff',
+                    icon: 'error',
+                    title: 'Opa,<br> houve um erro ao realizar Login.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
 
                 resposta.text().then(texto => {
                     console.error(texto);
@@ -145,5 +138,4 @@ Toast.fire({
 
         return false;
     }
-
 </script>

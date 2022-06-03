@@ -116,6 +116,7 @@
     var qtdJogadas = 0;
     var qtdAcertos = 0;
     var qtdPerdas = 0;
+    var media = 0;
 
     function guess() {
 
@@ -193,6 +194,17 @@
     
     function sortearFilme() {
         qtdJogadas++
+        fetch("/usuarios/score", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                JogadasServer: qtdJogadas,
+                AcertosServer: qtdAcertos,
+                PerdasServer: qtdPerdas
+            })
+        })
         if (filmes_sorteados.length < store_filmes.length) {
             let indiceFilme = Math.floor(Math.random() * store_filmes.length);
             while (filmes_sorteados.indexOf(store_filmes[indiceFilme]) != -1) {
@@ -217,11 +229,10 @@
         ocultar_score.style.display = 'block'
         id_score.style.display = 'flex'
 
-        let media = 0;
-
         if(qtdJogadas != 0) {
             media = (qtdAcertos/qtdJogadas) * 100;
         }
+        
         span_jogadas.innerHTML = `${Number(qtdJogadas)}`
         span_acertos.innerHTML = `${Number(qtdAcertos)}`
         span_perdas.innerHTML = `${Number(qtdPerdas)}`
