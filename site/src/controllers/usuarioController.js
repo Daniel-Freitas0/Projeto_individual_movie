@@ -61,6 +61,7 @@ function entrar(req, res) {
 }
 
 function score(req, res) {
+    var fkUsuario = req.body.fkUserServer;
     var jogadas = req.body.JogadasServer;
     var acertos = req.body.AcertosServer;
     var perdas = req.body.PerdasServer;
@@ -71,12 +72,16 @@ function score(req, res) {
         res.status(400).send("Suas jogadas estão undefined!");
     } else if (acertos == undefined) {
         res.status(400).send("Seu acerto está undefined!");
-    } else if (perdas == undefined) {
+    }
+    else if (fkUsuario == undefined) {
+        res.status(400).send("Seu fk está undefined!");
+    }    
+    else if (perdas == undefined) {
         res.status(400).send("Sua perda está undefined!");
     } else {
         
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(jogadas, acertos, perdas)
+        usuarioModel.score(fkUsuario, jogadas, acertos, perdas)
             .then(
                 function (resultado) {
                     res.json(resultado);

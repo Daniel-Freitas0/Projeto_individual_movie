@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="shortcut icon" href="Logo.png" />
     <script src="./js/funcoes.js"></script>
+    <script src="./js/sweet.js"></script>
     <title>Cadastro</title>
 </head>
 
@@ -46,7 +47,6 @@
 </body>
 
 </html>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     var emailValido = false;
     var senhaValida = false;
@@ -148,7 +148,7 @@ Toast.fire({
 })
     }
 
-    aguardar();
+
 
 //Recupere o valor da nova input pelo nome do id
 // Agora vá para o método fetch logo abaixo
@@ -201,7 +201,6 @@ Toast.fire({
         }, "2000")
         
         limparFormulario();
-        finalizarAguardar();
     } else {
         throw Swal.fire({
   position: 'center',
@@ -215,7 +214,6 @@ Toast.fire({
     }
 }).catch(function (resposta) {
     console.log(`#ERRO: ${resposta}`);
-    finalizarAguardar();
 });
 
 return false;
