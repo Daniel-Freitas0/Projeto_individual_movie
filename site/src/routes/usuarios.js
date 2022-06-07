@@ -20,6 +20,10 @@ router.post("/score", function (req, res) {
     usuarioController.score(req, res);
 })
 
+router.post("/ranking", function (req, res) {
+    usuarioController.ranking(req, res);
+})
+
 router.post("/autenticar", function (req, res) {
     usuarioController.entrar(req, res);
 });

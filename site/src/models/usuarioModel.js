@@ -18,6 +18,14 @@ function entrar(email, senha) {
     return database.executar(instrucao);
 }
 
+function ranking() {
+    var instrucao = `
+    SELECT email, acertos FROM score JOIN usuario ON fkUsuario = ID_USUARIO ORDER BY acertos DESC;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 function score(fkUsuario, jogadas, acertos, perdas) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function score():", jogadas, acertos, perdas);
     
@@ -45,6 +53,7 @@ function cadastrar(email, senha) {
 
 module.exports = {
     entrar,
+    ranking,
     score,
     cadastrar,
     listar,
