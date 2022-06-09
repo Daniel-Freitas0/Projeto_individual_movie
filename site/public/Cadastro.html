@@ -94,12 +94,13 @@
         var senha = senha_input.value;
         var confirm = confirmacao_senha_input.value;
         
-        if (senha_input.value.length < 7){
+        if (senha_input.value.length < 8){
             msgSenha.innerHTML = `senha deve ter no mínimo 8 caracteres`
             senhaValida = false;
         }
         else{
             senhaValida = true;
+            msgSenha.innerHTML = '';
         }
     }
     function validarConfirm() {
@@ -111,6 +112,7 @@
             confirmValido == false;
         }
         confirmValido = true;
+        msgConfirm.innerHTML = '';
     }
 
 function cadastrar() {
